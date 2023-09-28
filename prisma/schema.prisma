@@ -13,7 +13,7 @@ model User {
   email        String    @unique
   auth_session Session[]
   key          Key[]
-  lock         lock[]
+  lockers      Lock[]
 }
 
 model Session {
@@ -35,7 +35,7 @@ model Key {
   @@index([user_id])
 }
 
-model lock {
+model Lock {
   id            String             @id @unique
   user_id       String
   user          User               @relation(references: [id], fields: [user_id], onDelete: Cascade)
@@ -48,5 +48,5 @@ model TemporaryLockKey {
   id       String  @id @unique
   password String?
   lock_id  String
-  lock     lock    @relation(references: [id], fields: [lock_id], onDelete: Cascade)
+  lock     Lock    @relation(references: [id], fields: [lock_id], onDelete: Cascade)
 }

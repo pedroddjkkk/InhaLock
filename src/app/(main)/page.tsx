@@ -1,22 +1,30 @@
-"use client";
+import { Home } from "@/components/client";
+import prisma from "@/lib/db";
+import { getServerSideSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
-import { Title } from "@/components/ui/text";
-import { useSession } from "@/lib/hooks/session";
+export async function getUserWithLockers(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    include: {
+      lockers: {
+        include: {
+          temporaryKeys: true,
+        },
+      },
+    },
+  });
 
-export default function Home() {
-  const { session, loading } = useSession();
+  return user;
+}
 
-  return (
-    <main>
-      <div className="h-screen">
-        {loading ? (
-          <h1>Carregando</h1>
-        ) : (
-          <div>
-            <Title className="m-4 mt-12">Fechaduras</Title>
-          </div>
-        )}
-      </div>
-    </main>
-  );
+export default async function HomePage() {
+  const session = await getServerSideSession();
+  const user = await getUserWithLockers(session.user.userId);
+
+  if (!user) redirect("/login");
+
+  return <Home user={user} />;
 }
