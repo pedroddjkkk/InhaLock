@@ -7,16 +7,19 @@ const Form = ({
   children,
   action,
   onError,
+  className
 }: {
   children: React.ReactNode;
   action: string;
   onError?: (error: any) => void;
+  className?: string;
 }) => {
   const router = useRouter();
   return (
     <form
       action={action}
       method="post"
+      className={className}
       onSubmit={async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);

@@ -25,9 +25,13 @@ export default function Page() {
 
   return (
     <main>
-      <div className="flex justify-center items-center h-screen bg-blue-400">
-        <Form action="/api/auth/signup" onError={(error) => setError(error)}>
-          <Card className="w-96">
+      <div className="h-screen bg-blue-400">
+        <Form
+          action="/api/auth/signup"
+          onError={(error) => setError(error)}
+          className="flex justify-center items-center h-full"
+        >
+          <Card className="max-w-[360px] w-[90%]">
             <CardHeader>
               <CardTitle>Registrar</CardTitle>
               <CardDescription>

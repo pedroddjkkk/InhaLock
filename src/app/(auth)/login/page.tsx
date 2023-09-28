@@ -25,9 +25,13 @@ export default function Login() {
 
   return (
     <main>
-      <div className="flex justify-center items-center h-screen bg-blue-400">
-        <Form action="/api/auth/login" onError={(error) => setError(error)}>
-          <Card className="w-96">
+      <div className="h-screen bg-blue-400">
+        <Form
+          action="/api/auth/login"
+          onError={(error) => setError(error)}
+          className="w-full flex justify-center items-center h-full"
+        >
+          <Card className="max-w-[360px] w-[90%]">
             <CardHeader>
               <CardTitle>Login</CardTitle>
               <CardDescription>
@@ -53,9 +57,13 @@ export default function Login() {
                     type="password"
                     error={error?.field === "password"}
                   />
-                  {error?.field === "password" && <Text className="break-words">{error.message}</Text>}
+                  {error?.field === "password" && (
+                    <Text className="break-words">{error.message}</Text>
+                  )}
                 </div>
-                  {error?.field === "login" && <Text className="text-red-500">{error.message}</Text>}
+                {error?.field === "login" && (
+                  <Text className="text-red-500">{error.message}</Text>
+                )}
               </div>
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-2">
