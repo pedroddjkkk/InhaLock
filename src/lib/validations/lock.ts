@@ -1,6 +1,6 @@
 import z from "zod";
 
-const createLockSchema = z.object({
+export const createLockSchema = z.object({
   name: z
     .string()
     .min(3, "Nome deve ter pelo menos 3 caracteres")
@@ -12,4 +12,7 @@ const createLockSchema = z.object({
   securityCode: z
     .string()
     .min(4, "Código de segurança deve ter pelo menos 4 caracteres"),
+  description: z
+    .string()
+    .max(255, "Descrição deve ter no máximo 255 caracteres"),
 });

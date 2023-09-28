@@ -24,7 +24,7 @@ export default async function UserRootLayout({
       cookieStore.set("auth_session", sessionCookie.value);
     }
 
-    return <div>{children}</div>;
+    return <main>{children}</main>;
   } catch (e) {
     if (isRedirectError(e)) throw e;
     if (e instanceof LuciaError && e.message === `AUTH_INVALID_SESSION_ID`) {

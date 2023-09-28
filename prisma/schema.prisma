@@ -36,19 +36,20 @@ model Key {
 }
 
 model Lock {
-  id            String             @id @unique
+  id            Int                @id @unique @default(autoincrement())
   user_id       String
   user          User               @relation(references: [id], fields: [user_id], onDelete: Cascade)
   name          String
   password      String?
+  description   String?
   status        LockStatus         @default(DESCONECTADO)
   temporaryKeys TemporaryLockKey[]
 }
 
 model TemporaryLockKey {
-  id       String  @id @unique
+  id       Int     @id @unique @default(autoincrement())
   password String?
-  lock_id  String
+  lock_id  Int
   lock     Lock    @relation(references: [id], fields: [lock_id], onDelete: Cascade)
 }
 

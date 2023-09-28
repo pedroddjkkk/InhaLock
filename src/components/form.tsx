@@ -7,11 +7,13 @@ const Form = ({
   children,
   action,
   onError,
-  className
+  onSuccess,
+  className,
 }: {
   children: React.ReactNode;
   action: string;
   onError?: (error: any) => void;
+  onSuccess?: () => void;
   className?: string;
 }) => {
   const router = useRouter();
@@ -31,15 +33,19 @@ const Form = ({
           validateStatus: () => true,
         });
 
-        if (response.status === 400) {
-          const res = await response.data;
-          if (onError) {
-            onError(res);
-          }
-        }
-
-        if (response.status === 0) {
-          return router.refresh();
+        switch (response.status) {
+          case 400:
+            const res = await response.data;
+            if (onError) {
+              onError(res);
+            }
+            break;
+          case 0:
+            return router.refresh();
+          default:
+            if (onSuccess) {
+              onSuccess();
+            }
         }
       }}
     >

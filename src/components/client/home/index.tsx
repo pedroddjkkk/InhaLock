@@ -26,34 +26,32 @@ export default function Home({
   }>;
 }) {
   return (
-    <main>
-      <div className="h-screen">
-        <div>
-          <Link href={"/cadastrar"}>
-            <Card className="fixed bottom-0 -translate-x-1/2 left-1/2 rounded-full p-3 mb-4">
-              <AiOutlinePlus size={32} />
-            </Card>
-          </Link>
-          <Title className="m-4 mt-6 mb-6">Fechaduras</Title>
-          {user.lockers.map((locker) => (
-            <Card key={locker.id} className="m-4">
-              <CardHeader>
-                <CardTitle className="text-xl">{locker.name}</CardTitle>
-                <CardDescription>
-                  Status:{" "}
-                  <span
-                    className={`${
-                      locker.status === "DESCONECTADO" ? "text-red-500" : ""
-                    }`}
-                  >
-                    {locker.status}
-                  </span>
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
+    <div className="h-screen">
+      <div>
+        <Link href={"/cadastrar"}>
+          <Card className="fixed bottom-0 -translate-x-1/2 left-1/2 rounded-full p-3 mb-4">
+            <AiOutlinePlus size={32} />
+          </Card>
+        </Link>
+        <Title className="m-4 mt-6 mb-6">Fechaduras</Title>
+        {user.lockers.map((locker) => (
+          <Card key={locker.id} className="m-4">
+            <CardHeader>
+              <CardTitle className="text-xl">{locker.name}</CardTitle>
+              <CardDescription>
+                Status:{" "}
+                <span
+                  className={`${
+                    locker.status === "DESCONECTADO" ? "text-red-500" : ""
+                  }`}
+                >
+                  {locker.status}
+                </span>
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        ))}
       </div>
-    </main>
+    </div>
   );
 }
