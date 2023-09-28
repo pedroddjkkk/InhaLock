@@ -27,9 +27,9 @@ export default function Home({
           <h1>Carregando</h1>
         ) : (
           <div>
-            <Title className="m-4 mt-12">Fechaduras</Title>
+            <Title className="m-4 mt-6 mb-6">Fechaduras</Title>
             {user.lockers.map((locker) => (
-              <Card key={locker.id}>
+              <Card key={locker.id} className="m-4">
                 <CardHeader>
                   <CardTitle>{locker.name}</CardTitle>
                 </CardHeader>

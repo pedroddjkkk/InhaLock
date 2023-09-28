@@ -41,6 +41,7 @@ model Lock {
   user          User               @relation(references: [id], fields: [user_id], onDelete: Cascade)
   name          String
   password      String?
+  status        LockStatus         @default(DESCONECTADO)
   temporaryKeys TemporaryLockKey[]
 }
 
@@ -49,4 +50,11 @@ model TemporaryLockKey {
   password String?
   lock_id  String
   lock     Lock    @relation(references: [id], fields: [lock_id], onDelete: Cascade)
+}
+
+enum LockStatus {
+  ABERTO
+  FECHADO
+  CONECTADO
+  DESCONECTADO
 }
