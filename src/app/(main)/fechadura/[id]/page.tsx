@@ -15,6 +15,8 @@ async function getLockById(id: number) {
   return lock;
 }
 
+export const revalidate = 0;
+
 export default async function EditLock({ params }: { params: { id: string } }) {
   const lock = await getLockById(Number(params.id));
 

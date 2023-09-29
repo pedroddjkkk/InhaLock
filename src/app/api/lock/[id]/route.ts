@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import { getServerSideSession } from "@/lib/session";
 import { createLockSchema } from "@/lib/validations/lock";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
@@ -41,6 +42,9 @@ export async function POST(
       securityCode: validatedLockInput.data.securityCode,
     },
   });
+
+  revalidatePath(`/fechadura/${lock.id}`);
+  revalidatePath(`/`);
 
   return NextResponse.json(lock);
 }

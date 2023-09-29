@@ -20,6 +20,8 @@ export async function getUserWithLockers(userId: string) {
   return user;
 }
 
+export const revalidate = 0;
+
 export default async function HomePage() {
   const session = await getServerSideSession();
   const user = await getUserWithLockers(session.user.userId);
