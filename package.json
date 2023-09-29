@@ -12,7 +12,7 @@
   "dependencies": {
     "@lucia-auth/adapter-prisma": "^3.0.1",
     "@prisma/client": "^5.3.1",
-    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dialog": "1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@types/node": "20.6.2",
