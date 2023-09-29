@@ -30,7 +30,10 @@ export default function LockerForm({
       <Form
         action={`/api/lock/${lock ? lock.id : ""}`}
         onError={(error) => setError(error)}
-        onSuccess={() => router.push("/")}
+        onSuccess={() => {
+          router.refresh();
+          router.push("/");
+        }}
         className="flex flex-col"
       >
         <div className="flex flex-col gap-4">

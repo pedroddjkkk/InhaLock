@@ -15,12 +15,13 @@ import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { useSession } from "@/lib/hooks/session";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Login() {
   const [error, setError] = useState<{ field: string; message: string }>();
   const { session } = useSession();
+  const router = useRouter();
   if (session) redirect("/");
 
   return (
@@ -29,6 +30,10 @@ export default function Login() {
         <Form
           action="/api/auth/login"
           onError={(error) => setError(error)}
+          onSuccess={() => {
+            router.refresh();
+            router.push("/");
+          }}
           className="w-full flex justify-center items-center h-full"
         >
           <Card className="max-w-[360px] w-[90%]">

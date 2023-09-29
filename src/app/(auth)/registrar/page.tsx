@@ -16,11 +16,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useSession } from "@/lib/hooks/session";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Page() {
   const [error, setError] = useState<{ field: string; message: string }>();
   const { session } = useSession();
+  const router = useRouter();
   if (session) redirect("/");
 
   return (
@@ -29,6 +30,10 @@ export default function Page() {
         <Form
           action="/api/auth/signup"
           onError={(error) => setError(error)}
+          onSuccess={() => {
+            router.refresh();
+            router.push("/");
+          }}
           className="flex justify-center items-center h-full"
         >
           <Card className="max-w-[360px] w-[90%]">
