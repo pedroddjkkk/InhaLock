@@ -24,17 +24,18 @@ export default function LockerForm({
 
   return (
     <div className="mx-4">
-      <Title className="mb-8 mt-6">Cadastrar Cadeado</Title>
+      <Title className="mb-8 mt-6">
+        {lock ? "Editar Fechadura" : "Cadastrar Fechadura"}
+      </Title>
       <Form
         action={`/api/lock/${lock ? lock.id : ""}`}
         onError={(error) => setError(error)}
         onSuccess={() => router.push("/")}
         className="flex flex-col"
       >
-        <div className=""></div>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Nome do Cadeado</Label>
+            <Label htmlFor="name">Nome da Fechadura</Label>
             <Input
               id="name"
               name="name"
@@ -85,7 +86,7 @@ export default function LockerForm({
           >
             Cancelar
           </Link>
-          <Button>Cadastrar</Button>
+          <Button>{lock ? "Editar" : "Cadastrar"}</Button>
         </div>
       </Form>
     </div>

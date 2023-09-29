@@ -34,21 +34,23 @@ export default function Home({
         </Link>
         <Title className="m-4 mt-6 mb-6">Fechaduras</Title>
         {user.lockers.map((locker) => (
-          <Card key={locker.id} className="m-4">
-            <CardHeader>
-              <CardTitle className="text-xl">{locker.name}</CardTitle>
-              <CardDescription>
-                Status:{" "}
-                <span
-                  className={`${
-                    locker.status === "DESCONECTADO" ? "text-red-500" : ""
-                  }`}
-                >
-                  {locker.status}
-                </span>
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <Link href={`/fechadura/${locker.id}`} key={locker.id}>
+            <Card className="m-4">
+              <CardHeader>
+                <CardTitle className="text-xl">{locker.name}</CardTitle>
+                <CardDescription>
+                  Status:{" "}
+                  <span
+                    className={`${
+                      locker.status === "DESCONECTADO" ? "text-red-500" : ""
+                    }`}
+                  >
+                    {locker.status}
+                  </span>
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
