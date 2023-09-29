@@ -7,9 +7,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Title } from "@/components/ui/text";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlinePlus } from "react-icons/ai";
+import { IoExitOutline } from "react-icons/io5";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
 
 export default function Home({
   user,
@@ -32,7 +44,31 @@ export default function Home({
             <AiOutlinePlus size={32} />
           </Card>
         </Link>
-        <Title className="m-4 mt-6 mb-6">Fechaduras</Title>
+        <div className="mt-6 mb-6 flex flex-row justify-between w-full items-center">
+          <Title className="m-4  ml-5">Fechaduras</Title>
+          <Sheet>
+            <SheetTrigger className="m-4 mr-6">
+              <AiOutlineMenu size={28} />
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetDescription>
+                  Olá {user.username}, seja bem vindo(a)!
+                </SheetDescription>
+              </SheetHeader>
+              <SheetFooter>
+                <Button
+                  variant="outline"
+                  className="gap-[2px] mt-4"
+                  onClick={async () => await axios.post("/api/auth/logout")}
+                >
+                  <IoExitOutline />
+                  Sair
+                </Button>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+        </div>
         {user.lockers.map((locker) => (
           <Link href={`/fechadura/${locker.id}`} key={locker.id}>
             <Card className="m-4">

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { isRedirectError } from "./utils";
 import { LuciaError } from "lucia";
+import axios from "axios";
 
 export async function getServerSideSession() {
   try {
