@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import { getServerSideSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
-export async function getUserWithLockers(userId: string) {
+async function getUserWithLockers(userId: string) {
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
