@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Title } from "@/components/ui/text";
-import { useSession } from "@/lib/hooks/session";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
@@ -28,7 +27,7 @@ export default function Home({
   return (
     <div className="h-screen">
       <div>
-        <Link href={"/cadastrar"}>
+        <Link href={"/fechadura/cadastrar"}>
           <Card className="fixed bottom-0 -translate-x-1/2 left-1/2 rounded-full p-3 mb-4">
             <AiOutlinePlus size={32} />
           </Card>

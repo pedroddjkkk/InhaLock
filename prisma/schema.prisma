@@ -42,6 +42,7 @@ model Lock {
   name          String
   password      String?
   description   String?
+  securityCode  String
   status        LockStatus         @default(DESCONECTADO)
   temporaryKeys TemporaryLockKey[]
 }

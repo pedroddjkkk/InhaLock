@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
           id: session.user.userId,
         },
       },
+      securityCode: validatedLockInput.data.securityCode,
     },
   });
 

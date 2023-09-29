@@ -8,16 +8,25 @@ import { useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Prisma } from "@prisma/client";
 
-export default function Page() {
+export default function LockerForm({
+  lock,
+}: {
+  lock?: Prisma.LockGetPayload<{
+    include: {
+      temporaryKeys: true;
+    };
+  }>;
+}) {
   const [error, setError] = useState<{ field: string; message: string }>();
   const router = useRouter();
 
   return (
-    <div className="h-screen mx-4">
+    <div className="mx-4">
       <Title className="mb-8 mt-6">Cadastrar Cadeado</Title>
       <Form
-        action="/api/lock"
+        action={`/api/lock/${lock ? lock.id : ""}`}
         onError={(error) => setError(error)}
         onSuccess={() => router.push("/")}
         className="flex flex-col"
@@ -26,7 +35,12 @@ export default function Page() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Label htmlFor="name">Nome do Cadeado</Label>
-            <Input id="name" name="name" error={error?.field === "name"} />
+            <Input
+              id="name"
+              name="name"
+              error={error?.field === "name"}
+              defaultValue={lock?.name}
+            />
             {error?.field === "name" && <Text>{error.message}</Text>}
           </div>
           <div className="flex flex-col gap-2">
@@ -35,6 +49,7 @@ export default function Page() {
               id="description"
               name="description"
               error={error?.field === "description"}
+              defaultValue={lock?.description ? lock?.description : ""}
             />
             {error?.field === "description" && <Text>{error.message}</Text>}
           </div>
@@ -45,6 +60,7 @@ export default function Page() {
               name="password"
               type="password"
               error={error?.field === "password"}
+              defaultValue={lock?.password ? lock?.password : ""}
             />
             {error?.field === "password" && <Text>{error.message}</Text>}
           </div>
@@ -55,6 +71,7 @@ export default function Page() {
               name="securityCode"
               type="password"
               error={error?.field === "securityCode"}
+              defaultValue={lock?.securityCode ? lock?.securityCode : ""}
             />
             {error?.field === "securityCode" && <Text>{error.message}</Text>}
           </div>
