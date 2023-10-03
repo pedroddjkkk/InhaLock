@@ -17,7 +17,6 @@ import {
   SheetDescription,
   SheetFooter,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -40,8 +39,9 @@ export default function Home({
     <div className="h-screen">
       <div>
         <Link href={"/fechadura/cadastrar"}>
-          <Card className="fixed bottom-0 -translate-x-1/2 left-1/2 rounded-full p-3 mb-4">
-            <AiOutlinePlus size={32} />
+          <Card className="fixed bottom-0 -translate-x-1/2 left-1/2 w-[80%] bg-[#26C967] flex flex-row items-center justify-center p-6">
+            <AiOutlinePlus size={32} className="text-white" />
+            <span className="text-white">ADICIONAR</span>
           </Card>
         </Link>
         <div className="mt-6 mb-6 flex flex-row justify-between w-full items-center">
