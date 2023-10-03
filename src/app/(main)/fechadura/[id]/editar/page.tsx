@@ -1,4 +1,4 @@
-import { LockerDetails, LockerForm } from "@/components/client";
+import { LockerForm } from "@/components/client";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 
@@ -22,5 +22,5 @@ export default async function EditLock({ params }: { params: { id: string } }) {
 
   if (!lock || !lock.id) return redirect("/");
 
-  return <LockerDetails lock={lock} />;
+  return <LockerForm lock={lock} />;
 }

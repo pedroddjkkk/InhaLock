@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { Navbar } from "..";
 
 export default function Home({
   user,
@@ -37,41 +38,17 @@ export default function Home({
 }) {
   return (
     <div className="h-screen">
-      <div>
+      <div className="mx-4">
         <Link href={"/fechadura/cadastrar"}>
-          <Card className="fixed bottom-0 -translate-x-1/2 left-1/2 w-[80%] bg-[#26C967] flex flex-row items-center justify-center p-6">
+          <div className="fixed bottom-0 -translate-x-1/2 left-1/2 w-[80%] bg-[#26C967] flex flex-row items-center justify-center p-3 rounded-lg mb-3">
             <AiOutlinePlus size={32} className="text-white" />
             <span className="text-white">ADICIONAR</span>
-          </Card>
+          </div>
         </Link>
-        <div className="mt-6 mb-6 flex flex-row justify-between w-full items-center">
-          <Title className="m-4  ml-5">Fechaduras</Title>
-          <Sheet>
-            <SheetTrigger className="m-4 mr-6">
-              <AiOutlineMenu size={28} />
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetDescription>
-                  Olá {user.username}, seja bem vindo(a)!
-                </SheetDescription>
-              </SheetHeader>
-              <SheetFooter>
-                <Button
-                  variant="outline"
-                  className="gap-[2px] mt-4"
-                  onClick={async () => await axios.post("/api/auth/logout")}
-                >
-                  <IoExitOutline />
-                  Sair
-                </Button>
-              </SheetFooter>
-            </SheetContent>
-          </Sheet>
-        </div>
+        <Navbar title="Fechaduras" />
         {user.lockers.map((locker) => (
           <Link href={`/fechadura/${locker.id}`} key={locker.id}>
-            <Card className="m-4">
+            <Card className="my-4">
               <CardHeader>
                 <CardTitle className="text-xl">{locker.name}</CardTitle>
                 <CardDescription>
