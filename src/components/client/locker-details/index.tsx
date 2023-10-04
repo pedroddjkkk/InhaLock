@@ -1,19 +1,18 @@
 "use client";
 
 import { Title } from "@/components/ui/text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { Navbar, TemporaryKeyForm } from "..";
-import { AiOutlineEye, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export default function LockerDetails({
   lock,
@@ -24,9 +23,38 @@ export default function LockerDetails({
     };
   }>;
 }) {
-  const [error, setError] = useState<{ field: string; message: string }>();
-  const router = useRouter();
+  const [passwordVisible, setPasswordVisible] = useState<number[]>([]);
+  const [keysTime, setKeysTime] = useState<{ id: number; time: string }[]>([]);
   const pathname = usePathname();
+
+  useEffect(() => {
+    function updateCounter() {
+      const now = new Date();
+      const newKeysTime = lock.temporaryKeys.map((key) => {
+        const timeDifference = key.expiresAt.getTime() - now.getTime();
+
+        if (timeDifference <= 0) {
+          return { id: key.id, time: "00:00" };
+        } else {
+          const minutos = Math.floor(timeDifference / 1000 / 60);
+          const segundos = Math.floor((timeDifference / 1000) % 60);
+
+          return {
+            id: key.id,
+            time: `${minutos < 10 ? "0" + minutos : minutos}:${
+              segundos < 10 ? "0" + segundos : segundos
+            }`,
+          };
+        }
+      });
+
+      setKeysTime(newKeysTime);
+    }
+
+    const interval = setTimeout(() => updateCounter(), 1000);
+
+    return () => clearTimeout(interval);
+  }, [lock.temporaryKeys, keysTime]);
 
   return (
     <div className="mx-4">
@@ -53,18 +81,41 @@ export default function LockerDetails({
           return (
             <Card key={key.id} className="mt-4">
               <CardHeader>
-                <CardTitle className="text-lg">{key.name}</CardTitle>
-                <CardDescription>
-                  <div className="w-full flex flex-row justify-between items-center">
-                    {key.password ? (
-                      Array.from({ length: key.password?.length }).map(
-                        (_) => "*"
-                      )
-                    ) : (
-                      <span>Sem senha</span>
-                    )}
-                    <AiOutlineEye size={18} />
-                  </div>
+                <CardTitle className="text-lg flex flex-row justify-between items-center mb-2">
+                  <span>{key.name}</span>
+                  <span className="text-sm font-medium">
+                    {keysTime.find((time) => time.id === key.id)?.time} restantes
+                  </span>
+                </CardTitle>
+                <CardDescription className="w-full flex flex-row justify-between items-center">
+                  {key.password ? (
+                    <>
+                      {passwordVisible.includes(key.id)
+                        ? key.password
+                        : Array.from({ length: key.password?.length }).map(
+                            (_) => "*"
+                          )}
+                      {passwordVisible.includes(key.id) ? (
+                        <AiOutlineEyeInvisible
+                          className="cursor-pointer"
+                          onClick={() =>
+                            setPasswordVisible((prev) =>
+                              prev.filter((id) => id !== key.id)
+                            )
+                          }
+                        />
+                      ) : (
+                        <AiOutlineEye
+                          className="cursor-pointer"
+                          onClick={() =>
+                            setPasswordVisible((prev) => [...prev, key.id])
+                          }
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <span>Sem senha</span>
+                  )}
                 </CardDescription>
               </CardHeader>
             </Card>
