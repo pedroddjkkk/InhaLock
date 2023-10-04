@@ -28,8 +28,9 @@ import {
 } from "@/components/ui/form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 
-export const createTemporaryKeySchema = z.object({
+const createTemporaryKeySchema = z.object({
   name: z
     .string({ required_error: "Nome é obrigatório" })
     .min(3, "Nome deve ter pelo menos 3 caracteres")
@@ -49,13 +50,20 @@ export default function TemporaryKeyForm({
     };
   }>;
 }) {
-  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof createTemporaryKeySchema>>({
     resolver: zodResolver(createTemporaryKeySchema),
   });
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
-  function onSubmit(data: any) {
-    console.log(data);
+  async function onSubmit(data: any) {
+    const res = await axios.post(`/api/lock/${lock.id}/temporary-key`, data);
+
+    if (res.status === 200) {
+      setOpen(false);
+      form.reset();
+      router.refresh();
+    }
   }
 
   return (
@@ -68,7 +76,10 @@ export default function TemporaryKeyForm({
           <DialogTitle>Adicionar chave temporaria</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 flex flex-col"
+          >
             <FormField
               control={form.control}
               name="name"

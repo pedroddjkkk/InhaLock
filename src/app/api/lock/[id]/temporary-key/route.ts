@@ -1,15 +1,27 @@
 import prisma from "@/lib/db";
 import { getServerSideSession } from "@/lib/session";
 import { createLockSchema } from "@/lib/validations/lock";
-import { createTemporaryKeySchema } from "@/lib/validations/temporaryKeys";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
+import z from "zod";
 
-export async function POST(req: NextRequest) {
-  const formData = await req.formData();
+const createTemporaryKeySchema = z.object({
+  name: z
+    .string({ required_error: "Nome é obrigatório" })
+    .min(3, "Nome deve ter pelo menos 3 caracteres")
+    .max(255, "Nome deve ter no máximo 255 caracteres"),
+  password: z
+    .string({ required_error: "Nome é obrigatório" })
+    .min(4, "Senha deve ter pelo menos 4 caracteres")
+    .max(255, "Senha deve ter no máximo 255 caracteres"),
+});
 
-  const body = Object.fromEntries(formData.entries());
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const body = await req.json();
 
   const validatedInput = createTemporaryKeySchema.safeParse(body);
 
@@ -30,15 +42,19 @@ export async function POST(req: NextRequest) {
   if (!session)
     return NextResponse.json({ error: "No session found" }, { status: 401 });
 
+  const expirationDate = new Date();
+  expirationDate.setMinutes(expirationDate.getMinutes() + 30);
+
   const key = await prisma.temporaryLockKey.create({
     data: {
       name: validatedInput.data.name,
       password: validatedInput.data.password,
-      
+      lock_id: Number(params.id),
+      expiresAt: expirationDate,
     },
   });
 
-  revalidatePath(`/`);
+  revalidatePath(`/fechadura/${params.id}`);
 
-  return NextResponse.json(lock);
+  return NextResponse.json(key);
 }
