@@ -11,12 +11,14 @@ import {
 import { Title } from "@/components/ui/text";
 import { useSession } from "@/lib/hooks/session";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoExitOutline } from "react-icons/io5";
 
 export default function Navbar({ title }: { title: string }) {
   const session = useSession();
+  const router = useRouter();
 
   return (
     <div className="mt-6 mb-6 flex flex-row justify-between w-full items-center">
@@ -37,7 +39,13 @@ export default function Navbar({ title }: { title: string }) {
             <Button
               variant="outline"
               className="gap-[2px] mt-4"
-              onClick={async () => await axios.post("/api/auth/logout")}
+              onClick={async () => {
+                const res = await axios.post("/api/auth/logout");
+
+                if (res.status === 200) {
+                  router.push("/login");
+                }
+              }}
             >
               <IoExitOutline />
               Sair

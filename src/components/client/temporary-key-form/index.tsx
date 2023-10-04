@@ -52,6 +52,7 @@ export default function TemporaryKeyForm({
 }) {
   const form = useForm<z.infer<typeof createTemporaryKeySchema>>({
     resolver: zodResolver(createTemporaryKeySchema),
+    shouldFocusError: false,
   });
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -100,7 +101,7 @@ export default function TemporaryKeyForm({
                 <FormItem>
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

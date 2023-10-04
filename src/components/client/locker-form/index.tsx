@@ -9,6 +9,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Prisma } from "@prisma/client";
+import { Navbar } from "..";
 
 export default function LockerForm({
   lock,
@@ -24,9 +25,10 @@ export default function LockerForm({
 
   return (
     <div className="mx-4">
-      <Title className="mb-8 mt-6">
-        {lock ? "Editar Fechadura" : "Cadastrar Fechadura"}
-      </Title>
+      <Navbar title="Editar fechadura" />
+      <div className="w-full bg-[#26C967] rounded-lg p-4 flex justify-center my-8">
+        <span className="text-2xl text-white">{lock?.name}</span>
+      </div>
       <Form
         action={`/api/lock/${lock ? lock.id : ""}`}
         onError={(error) => setError(error)}
@@ -81,14 +83,9 @@ export default function LockerForm({
           </div>
         </div>
         <div className="self-end mt-6 flex gap-4">
-          <Link
-            className={buttonVariants({
-              variant: "outline",
-            })}
-            href="/"
-          >
+          <Button variant="outline" onClick={() => router.back()}>
             Cancelar
-          </Link>
+          </Button>
           <Button>{lock ? "Editar" : "Cadastrar"}</Button>
         </div>
       </Form>

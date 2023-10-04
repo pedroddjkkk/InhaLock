@@ -7,14 +7,7 @@ async function getLockById(id: number) {
     where: {
       id,
     },
-    select: {
-      description: true,
-      id: true,
-      name: true,
-      password: true,
-      securityCode: true,
-      status: true,
-      user_id: true,
+    include: {
       temporaryKeys: {
         where: {
           expiresAt: {
