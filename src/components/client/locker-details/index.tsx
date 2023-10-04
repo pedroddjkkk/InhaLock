@@ -6,8 +6,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { Navbar, TemporaryKeyForm } from "..";
-import { AiOutlinePlus } from "react-icons/ai";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { AiOutlineEye, AiOutlinePlus } from "react-icons/ai";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export default function LockerDetails({
@@ -48,7 +53,19 @@ export default function LockerDetails({
           return (
             <Card key={key.id} className="mt-4">
               <CardHeader>
-                <CardTitle className="text-xl">{key.name}</CardTitle>
+                <CardTitle className="text-lg">{key.name}</CardTitle>
+                <CardDescription>
+                  <div className="w-full flex flex-row justify-between items-center">
+                    {key.password ? (
+                      Array.from({ length: key.password?.length }).map(
+                        (_) => "*"
+                      )
+                    ) : (
+                      <span>Sem senha</span>
+                    )}
+                    <AiOutlineEye size={18} />
+                  </div>
+                </CardDescription>
               </CardHeader>
             </Card>
           );

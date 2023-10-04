@@ -6,21 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Title } from "@/components/ui/text";
-import { AiOutlineMenu, AiOutlinePlus } from "react-icons/ai";
-import { IoExitOutline } from "react-icons/io5";
+import { AiOutlinePlus } from "react-icons/ai";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
 import { Navbar } from "..";
 
 export default function Home({
