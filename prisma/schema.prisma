@@ -49,10 +49,12 @@ model Lock {
 }
 
 model TemporaryLockKey {
-  id       Int     @id @unique @default(autoincrement())
-  password String?
-  lock_id  Int
-  lock     Lock    @relation(references: [id], fields: [lock_id], onDelete: Cascade)
+  id        Int      @id @unique @default(autoincrement())
+  name      String
+  password  String?
+  expiresAt DateTime
+  lock_id   Int
+  lock      Lock     @relation(references: [id], fields: [lock_id], onDelete: Cascade)
 }
 
 enum LockStatus {
