@@ -26,7 +26,7 @@ export default function Login() {
 
   return (
     <main>
-      <div className="h-screen bg-blue-400">
+      <div className="h-screen bg-[#50d685]">
         <Form
           action="/api/auth/login"
           onError={(error) => setError(error)}

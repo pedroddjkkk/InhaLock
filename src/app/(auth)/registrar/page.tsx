@@ -26,7 +26,7 @@ export default function Page() {
 
   return (
     <main>
-      <div className="h-screen bg-blue-400">
+      <div className="h-screen bg-[#50d685]">
         <Form
           action="/api/auth/signup"
           onError={(error) => setError(error)}
