@@ -12,7 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
     "@lucia-auth/adapter-prisma": "^3.0.1",
-    "@prisma/client": "^5.3.1",
+    "@prisma/client": "^5.4.1",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
@@ -41,6 +41,6 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "prisma": "^5.3.1"
+    "prisma": "^5.4.1"
   }
 }

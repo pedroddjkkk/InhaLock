@@ -12,7 +12,6 @@ import { Title } from "@/components/ui/text";
 import { useSession } from "@/lib/hooks/session";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoExitOutline } from "react-icons/io5";
 
