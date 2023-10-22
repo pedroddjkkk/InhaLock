@@ -1,0 +1,29 @@
+{
+  "background_color": "#ffffff",
+  "description": "InhaLock - O melhor sistema de controle de chaves",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "InhaLock",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "InhaLock",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "categories": ["security"],
+  "icons": [
+    {
+      "src": "/inhalock.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Principal",
+      "url": "/",
+      "description": "Pagina Principal"
+    }
+  ],
+  "lang": "pt",
+  "display_override": ["standalone", "window-controls-overlay"]
+}
