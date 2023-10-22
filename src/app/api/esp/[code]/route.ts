@@ -33,7 +33,7 @@ export async function POST(
 
   if (!lock) {
     return NextResponse.json({
-      code: 2,
+      code: 3,
     });
   }
 
