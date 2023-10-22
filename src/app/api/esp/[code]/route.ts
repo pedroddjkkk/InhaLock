@@ -5,11 +5,29 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { code: string } }
 ) {
-  const lock = await prisma.lock.findUnique({
+  const lock = await prisma.lock.update({
     where: {
       securityCode: params.code,
     },
+    data: {
+      status: "CONECTADO",
+    },
   });
+
+  if (lock.willOpen) {
+    await prisma.lock.update({
+      where: {
+        securityCode: params.code,
+      },
+      data: {
+        willOpen: false,
+      },
+    });
+
+    return NextResponse.json({
+      code: 1,
+    });
+  }
 
   return NextResponse.json({
     code: 2,

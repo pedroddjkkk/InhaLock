@@ -13,6 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function LockerDetails({
   lock,
@@ -26,6 +29,7 @@ export default function LockerDetails({
   const [passwordVisible, setPasswordVisible] = useState<number[]>([]);
   const [keysTime, setKeysTime] = useState<{ id: number; time: string }[]>([]);
   const pathname = usePathname();
+  const { toast } = useToast();
 
   useEffect(() => {
     function updateCounter() {
@@ -62,11 +66,27 @@ export default function LockerDetails({
       <div className="w-full bg-[#26C967] rounded-lg p-4 flex justify-center mt-8">
         <span className="text-2xl text-white">{lock?.name}</span>
       </div>
-      <div className="flex flex-row mt-8 gap-6">
+      <div className="flex flex-row mt-8 gap-6 items-center w-full">
         <span>{lock.description}</span>
         <Link href={pathname + "/editar"} className="text-[#26C967]">
           Editar
         </Link>
+        <Button
+          className="self-end"
+          onClick={async () => {
+            const res = await axios.post(
+              `/api/esp/remote/${lock.securityCode}`
+            );
+
+            if (res)
+              toast({
+                title: "Fechadura Aberta!",
+                className: "mt-8"
+              });
+          }}
+        >
+          Abrir
+        </Button>
       </div>
       <div className="flex flex-row justify-between items-center mt-8">
         <Title className="text-lg font-semibold">Chaves temporárias</Title>
@@ -84,7 +104,8 @@ export default function LockerDetails({
                 <CardTitle className="text-lg flex flex-row justify-between items-center mb-2">
                   <span>{key.name}</span>
                   <span className="text-sm font-medium">
-                    {keysTime.find((time) => time.id === key.id)?.time} restantes
+                    {keysTime.find((time) => time.id === key.id)?.time}{" "}
+                    restantes
                   </span>
                 </CardTitle>
                 <CardDescription className="w-full flex flex-row justify-between items-center">

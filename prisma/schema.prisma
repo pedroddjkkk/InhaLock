@@ -45,6 +45,7 @@ model Lock {
   description   String?
   securityCode  String             @unique
   status        LockStatus         @default(DESCONECTADO)
+  willOpen      Boolean?
   temporaryKeys TemporaryLockKey[]
 }
 
