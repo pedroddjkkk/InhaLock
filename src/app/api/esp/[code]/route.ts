@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function GET(req: NextRequest, { params }: { params: { id: string } }) {
   return NextResponse.json({
-    code: 0,
+    code: 2,
   });
 }
 
