@@ -15,13 +15,9 @@
   "screenshots": [],
   "icons": [
     {
-      "src": "/favicon.ico",
-      "type": "image/x-icon",
-      "sizes": "16x16"
-    },
-    {
-      "src": "/favicon.ico",
-      "type": "image/x-icon"
+      "src": "inhalock.png",
+      "type": "image/png",
+      "sizes": "192x192"
     }
   ],
   "shortcuts": [
