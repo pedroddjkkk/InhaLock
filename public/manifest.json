@@ -1,29 +1,41 @@
 {
-  "background_color": "#ffffff",
-  "description": "InhaLock - O melhor sistema de controle de chaves",
-  "dir": "ltr",
-  "display": "standalone",
-  "name": "InhaLock",
-  "orientation": "any",
-  "scope": "/",
-  "short_name": "InhaLock",
-  "start_url": "/",
-  "theme_color": "#ffffff",
-  "categories": ["security"],
+  "short_name": "Weather",
+  "name": "Weather: Do I need an umbrella?",
   "icons": [
     {
       "src": "/inhalock.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6",
   "shortcuts": [
     {
-      "name": "Principal",
-      "url": "/",
-      "description": "Pagina Principal"
+      "name": "How's weather today?",
+      "short_name": "Today",
+      "description": "View weather information for today",
+      "url": "/today?source=pwa",
+      "icons": [{ "src": "/images/today.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "How's weather tomorrow?",
+      "short_name": "Tomorrow",
+      "description": "View weather information for tomorrow",
+      "url": "/tomorrow?source=pwa",
+      "icons": [{ "src": "/images/tomorrow.png", "sizes": "192x192" }]
     }
   ],
-  "lang": "pt",
-  "display_override": ["standalone", "window-controls-overlay"]
+  "description": "Weather forecast information",
+  "screenshots": [
+    {
+      "src": "/inhalock.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
 }
