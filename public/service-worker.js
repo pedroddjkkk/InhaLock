@@ -28,17 +28,21 @@ const saveSubscription = async (subscription) => {
   return response.json();
 };
 
-self.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const applicationServerKey = urlB64ToUint8Array(
-      "BIPPr8KRaGiQr6ksQk3bSv-h9HoRdl40Z352XuG46ThdZLH8JO07Lx4XPdzM0B5wOPYVf80njYe01H8DPAM7GHw"
-    );
-    const options = { applicationServerKey, userVisibleOnly: true };
-    const subscription = await self.registration.pushManager.subscribe(options);
-    const response = await saveSubscription(subscription);
-    console.log(response);
-  } catch (err) {
-    console.log("Error", err);
+self.addEventListener("message", async (event) => {
+  if (event.data === "activate") {
+    try {
+      const applicationServerKey = urlB64ToUint8Array(
+        "BIPPr8KRaGiQr6ksQk3bSv-h9HoRdl40Z352XuG46ThdZLH8JO07Lx4XPdzM0B5wOPYVf80njYe01H8DPAM7GHw"
+      );
+      const options = { applicationServerKey, userVisibleOnly: true };
+      const subscription = await self.registration.pushManager.subscribe(
+        options
+      );
+      const response = await saveSubscription(subscription);
+      console.log(response);
+    } catch (err) {
+      console.log("Error", err);
+    }
   }
 });
 

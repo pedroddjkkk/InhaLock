@@ -14,14 +14,15 @@ export default function Services() {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/service-worker.js", { scope: "/" })
-        .then((registration) => {
-          console.log(
-            "Service worker registered successfully. Scope:",
-            registration.scope
-          );
+        .then(async (registration) => {
+          console.log('Service Worker registrado com sucesso!', registration);
+
+          if (!registration.active) return;
+
+          registration.active.postMessage("activate");
         })
         .catch((error) => {
-          console.error("Service worker registration failed:", error);
+          console.error('Erro ao registrar o Service Worker:', error);
         });
     }
 
