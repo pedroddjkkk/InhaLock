@@ -28,6 +28,9 @@ export async function POST(
       JSON.stringify({
         title: "Alguem está tentando abrir sua porta!",
         options: {
+          data: {
+            securityCode: params.code,
+          },
           actions: [
             {
               action: "open",

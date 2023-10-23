@@ -1,6 +1,8 @@
 self.addEventListener("install", () => {
-  console.log("Service worker installed ");
+  console.log("Service worker instalado");
 });
+
+const SERVER_URL = "https://inha-lock.vercel.app";
 
 const urlB64ToUint8Array = (base64String) => {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -16,11 +18,7 @@ const urlB64ToUint8Array = (base64String) => {
 };
 
 const saveSubscription = async (subscription) => {
-  const SERVER_URL =
-    process.env.NODE_ENV === "production"
-      ? "https://inha-lock.vercel.app/api/user/subscription"
-      : "http://localhost:3000/api/user/subscription";
-  const response = await fetch(SERVER_URL, {
+  const response = await fetch(SERVER_URL + "/api/user/subscription", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -53,8 +51,18 @@ self.addEventListener("push", function (event) {
   }
 });
 
-self.addEventListener("notificationclick", function (event) {
-  console.log("Notification clicked");
+self.addEventListener("notificationclick", async function (event) {
   console.log(event);
+  const securityCode = event.notification.data.securityCode;
+
+  if (event.action === "open") {
+    console.log(securityCode);
+    const res = await fetch(SERVER_URL + "/api/esp/remote/" + securityCode, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
   event.notification.close();
 });
