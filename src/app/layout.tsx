@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import Services from "./services";
 
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={roboto.className}>
+        <Services />
         <Toaster />
         {children}
       </body>

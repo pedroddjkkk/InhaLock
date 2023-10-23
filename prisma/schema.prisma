@@ -9,12 +9,13 @@ datasource db {
 }
 
 model User {
-  id           String    @id @unique
-  username     String
-  email        String    @unique
-  auth_session Session[]
-  key          Key[]
-  lockers      Lock[]
+  id               String    @id @unique
+  username         String
+  email            String    @unique
+  pushSubscription Json?
+  auth_session     Session[]
+  key              Key[]
+  lockers          Lock[]
 }
 
 model Session {
