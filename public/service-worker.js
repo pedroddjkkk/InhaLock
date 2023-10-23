@@ -28,7 +28,7 @@ const saveSubscription = async (subscription) => {
   return response.json();
 };
 
-self.addEventListener("activate", async () => {
+self.addEventListener("DOMContentLoaded", async () => {
   try {
     const applicationServerKey = urlB64ToUint8Array(
       "BIPPr8KRaGiQr6ksQk3bSv-h9HoRdl40Z352XuG46ThdZLH8JO07Lx4XPdzM0B5wOPYVf80njYe01H8DPAM7GHw"
