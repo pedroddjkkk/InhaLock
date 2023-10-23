@@ -10,14 +10,14 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
 
-  const user = await prisma.user.update({
+  const updatedSession = await prisma.session.update({
     where: {
-      id: session.user.userId,
+      id: session.sessionId,
     },
     data: {
       pushSubscription: body,
     },
   });
 
-  return NextResponse.json(user);
+  return NextResponse.json({ succes: true });
 }

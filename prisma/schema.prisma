@@ -12,7 +12,6 @@ model User {
   id               String    @id @unique
   username         String
   email            String    @unique
-  pushSubscription Json?
   auth_session     Session[]
   key              Key[]
   lockers          Lock[]
@@ -23,6 +22,7 @@ model Session {
   user_id        String
   active_expires BigInt
   idle_expires   BigInt
+  pushSubscription Json?
   user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])

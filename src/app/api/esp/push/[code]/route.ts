@@ -6,13 +6,18 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { code: string } }
 ) {
-  const users = await prisma.user.findMany({
+  const sessions = await prisma.session.findMany({
     where: {
-      lockers: {
-        some: {
-          securityCode: params.code,
+      user: {
+        lockers: {
+          some: {
+            securityCode: params.code,
+          },
         },
       },
+    },
+    include: {
+      user: true,
     },
   });
 
@@ -22,9 +27,9 @@ export async function POST(
     process.env.VAPID_PRIVATE_KEY
   );
 
-  users.forEach((user) => {
+  sessions.forEach((session) => {
     webpush.sendNotification(
-      user.pushSubscription,
+      session.pushSubscription,
       JSON.stringify({
         title: "Alguem está tentando abrir sua porta!",
         options: {
