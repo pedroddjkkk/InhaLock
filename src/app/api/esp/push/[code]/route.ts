@@ -21,6 +21,21 @@ export async function POST(
     },
   });
 
+  const lock = await prisma.lock.findUnique({
+    where: {
+      securityCode: params.code,
+    },
+    select: {
+      name: true,
+    },
+  });
+
+  if (!lock) {
+    return NextResponse.json({
+      code: 3,
+    });
+  }
+
   webpush.setVapidDetails(
     "mailto:pedroddjkk@email.com",
     process.env.VAPID_PUBLIC_KEY,
@@ -32,7 +47,7 @@ export async function POST(
     webpush.sendNotification(
       session.pushSubscription,
       JSON.stringify({
-        title: "Alguem está tentando abrir sua porta!",
+        title: "Alguem está tentando abrir sua fechadura " + lock.name + "!",
         options: {
           data: {
             securityCode: params.code,

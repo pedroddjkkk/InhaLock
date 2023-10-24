@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+const webpush = require("web-push");
 
 export async function GET(
   req: NextRequest,
@@ -55,6 +56,12 @@ export async function POST(
     });
   }
 
+  webpush.setVapidDetails(
+    "mailto:pedroddjkk@email.com",
+    process.env.VAPID_PUBLIC_KEY,
+    process.env.VAPID_PRIVATE_KEY
+  );
+
   const temporaryKey = lock.temporaryKeys
     .filter((key) => key.expiresAt.getTime() - new Date().getTime() > 0)
     .find((key) => key.password == body);
@@ -64,6 +71,31 @@ export async function POST(
       code: 1,
     });
   } else {
+    const sessions = await prisma.session.findMany({
+      where: {
+        user: {
+          lockers: {
+            some: {
+              securityCode: params.code,
+            },
+          },
+        },
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    sessions.forEach((session) => {
+      if (!session.pushSubscription) return;
+      webpush.sendNotification(
+        session.pushSubscription,
+        JSON.stringify({
+          title: "Alguem errou a senha da fechadura " + lock.name + "!",
+        })
+      );
+    });
+
     return NextResponse.json({
       code: 0,
     });
