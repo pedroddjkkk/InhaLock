@@ -1,4 +1,5 @@
 "use client";
+import { PageWrapper } from "@/app/wrapper";
 import { Navbar } from "@/components/client";
 import { Switch } from "@/components/ui/switch";
 import { Text } from "@/components/ui/text";
@@ -47,32 +48,34 @@ export default function Configuracoes() {
   }, [session.user]);
 
   return (
-    <div className="mx-4">
-      <Navbar title="Configurações" />
-      {session.user ? (
-        <>
-          <div className="mt-6 flex flex-row justify-start items-center bg-gray-50 rounded-lg w-full p-2">
-            <PiUserCircleLight size={68} className="font-thin" />
-            <div className="flex flex-col ml-2">
-              <Text className="text-lg font-bold text-black">
-                {session.user.username}
-              </Text>
-              <Text className="text-base">{session.user.email}</Text>
+    <PageWrapper className="overflow-hidden">
+      <div className="mx-4">
+        <Navbar title="Configurações" />
+        {session.user ? (
+          <>
+            <div className="mt-6 flex flex-row justify-start items-center bg-gray-50 rounded-lg w-full p-2">
+              <PiUserCircleLight size={68} className="font-thin" />
+              <div className="flex flex-col ml-2">
+                <Text className="text-lg font-bold text-black">
+                  {session.user.username}
+                </Text>
+                <Text className="text-base">{session.user.email}</Text>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row items-center mt-12 w-full relative">
-            <AiOutlineBell size={48} className="text-gray-500" />
-            <Text className="text-xl font-semibold ml-2">Notificações</Text>
-            <Switch
-              className="absolute right-0"
-              onClick={() => updateUser()}
-              checked={notifications}
-            />
-          </div>
-        </>
-      ) : (
-        <Text>Carregando...</Text>
-      )}
-    </div>
+            <div className="flex flex-row items-center mt-12 w-full relative">
+              <AiOutlineBell size={48} className="text-gray-500" />
+              <Text className="text-xl font-semibold ml-2">Notificações</Text>
+              <Switch
+                className="absolute right-0"
+                onClick={() => updateUser()}
+                checked={notifications}
+              />
+            </div>
+          </>
+        ) : (
+          <Text>Carregando...</Text>
+        )}
+      </div>
+    </PageWrapper>
   );
 }
