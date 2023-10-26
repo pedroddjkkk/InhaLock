@@ -43,28 +43,29 @@ export async function POST(
   );
 
   sessions.forEach((session) => {
-    if (!session.pushSubscription && !session.user.sendNotification) return;
-    webpush.sendNotification(
-      session.pushSubscription,
-      JSON.stringify({
-        title: "Alguem está tentando abrir sua fechadura " + lock.name + "!",
-        options: {
-          data: {
-            securityCode: params.code,
+    if (session.pushSubscription && session.user.sendNotification) {
+      webpush.sendNotification(
+        session.pushSubscription,
+        JSON.stringify({
+          title: "Alguem está tentando abrir sua fechadura " + lock.name + "!",
+          options: {
+            data: {
+              securityCode: params.code,
+            },
+            actions: [
+              {
+                action: "open",
+                title: "Abrir",
+              },
+              {
+                action: "deny",
+                title: "Negar",
+              },
+            ],
           },
-          actions: [
-            {
-              action: "open",
-              title: "Abrir",
-            },
-            {
-              action: "deny",
-              title: "Negar",
-            },
-          ],
-        },
-      })
-    );
+        })
+      );
+    }
   });
 
   return NextResponse.json({ success: true });
