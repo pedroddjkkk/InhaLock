@@ -87,13 +87,14 @@ export async function POST(
     });
 
     sessions.forEach((session) => {
-      if (!session.pushSubscription && !session.user.sendNotification) return;
-      webpush.sendNotification(
-        session.pushSubscription,
-        JSON.stringify({
-          title: "Alguem errou a senha da fechadura " + lock.name + "!",
-        })
-      );
+      if (session.pushSubscription && session.user.sendNotification) {
+        webpush.sendNotification(
+          session.pushSubscription,
+          JSON.stringify({
+            title: "Alguem errou a senha da fechadura " + lock.name + "!",
+          })
+        );
+      }
     });
 
     return NextResponse.json({
