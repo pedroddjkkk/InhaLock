@@ -15,9 +15,10 @@ export default function Configuracoes() {
   const [notifications, setNotifications] = useState<boolean>(false);
 
   async function updateUser() {
-    const hasPermission = window.Notification.permission === "granted";
+    console.log(window.Notification.permission);
+    
 
-    if (!notifications === true && !hasPermission) {
+    if (!notifications === true && window.Notification.permission === "denied" || window.Notification.permission === "default") {
       const permission = await window.Notification.requestPermission();
       if (permission !== "granted") {
         toast({
