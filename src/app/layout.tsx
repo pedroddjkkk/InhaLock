@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Services from "./services";
+import { PageWrapper } from "./wrapper";
 
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body className={roboto.className}>
         <Services />
         <Toaster />
-        {children}
+        <PageWrapper className="overflow-hidden">{children}</PageWrapper>
       </body>
     </html>
   );
