@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { auth } from "@/auth/lucia";
 import { LuciaError } from "lucia";
+import prisma from "@/lib/db";
 
 export async function GET() {
   const cookieStore = cookies();
@@ -19,7 +20,13 @@ export async function GET() {
       cookieStore.set("auth_session", sessionCookie.value);
     }
 
-    return NextResponse.json({ session });
+    const user = await prisma.user.findUnique({
+      where: {
+        id: session.user.userId,
+      },
+    });
+
+    return NextResponse.json({ session, user });
   } catch (e) {
     if (e instanceof LuciaError && e.message === `AUTH_INVALID_SESSION_ID`) {
       cookieStore.delete("auth_session");

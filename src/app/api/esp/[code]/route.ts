@@ -87,7 +87,7 @@ export async function POST(
     });
 
     sessions.forEach((session) => {
-      if (!session.pushSubscription) return;
+      if (!session.pushSubscription && !session.user.sendNotification) return;
       webpush.sendNotification(
         session.pushSubscription,
         JSON.stringify({
