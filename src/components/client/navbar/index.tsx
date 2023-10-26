@@ -23,11 +23,6 @@ export default function Navbar({ title }: { title: string }) {
   const session = useSession();
   const router = useRouter();
   const pathname = usePathname();
-  const pathnameArray = pathname.split("/");
-
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
 
   return (
     <div className="mt-6 mb-6 flex flex-row justify-between w-full items-center">
@@ -51,7 +46,7 @@ export default function Navbar({ title }: { title: string }) {
                 className={
                   buttonVariants({ variant: "outline" }) +
                   ` mb-2 gap-[2px] hover:bg-gray-50 transition-colors duration-150 ${
-                    pathnameArray[0] === "" ? "bg-gray-50" : ""
+                    pathname === "/" ? "bg-gray-50" : ""
                   }`
                 }
                 href={"/"}
@@ -63,7 +58,7 @@ export default function Navbar({ title }: { title: string }) {
                 className={
                   buttonVariants({ variant: "outline" }) +
                   ` mb-2 gap-[2px] hover:bg-gray-50 transition-colors duration-150 ${
-                    pathnameArray[1] === "configuracoes" ? "bg-gray-50" : ""
+                    pathname === "/configuracoes" ? "bg-gray-50" : ""
                   }`
                 }
                 href={"/configuracoes"}

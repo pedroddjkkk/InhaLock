@@ -14,7 +14,7 @@ export const PageWrapper = ({
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 20 }}
-    className={cn("min-h-screenHeightWithoutHeader", className)}
+    className={cn("min-h-screen", className)}
   >
     {children}
   </motion.div>
