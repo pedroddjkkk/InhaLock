@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
+import { PageWrapper } from "@/app/wrapper";
 
 export default function LockerDetails({
   lock,
@@ -61,88 +62,90 @@ export default function LockerDetails({
   }, [lock.temporaryKeys, keysTime]);
 
   return (
-    <div className="mx-4">
-      <Navbar title="Ver fechadura" />
-      <div className="w-full bg-[#26C967] rounded-lg p-4 flex justify-center mt-8">
-        <span className="text-2xl text-white">{lock?.name}</span>
-      </div>
-      <div className="flex flex-row mt-8 gap-6 items-center w-full">
-        <span>{lock.description}</span>
-        <Link href={pathname + "/editar"} className="text-[#26C967]">
-          Editar
-        </Link>
-        <Button
-          className="self-end"
-          onClick={async () => {
-            const res = await axios.post(
-              `/api/esp/remote/${lock.securityCode}`
-            );
-
-            if (res)
-              toast({
-                title: "Fechadura Aberta!",
-                className: "mt-8"
-              });
-          }}
-        >
-          Abrir
-        </Button>
-      </div>
-      <div className="flex flex-row justify-between items-center mt-8">
-        <Title className="text-lg font-semibold">Chaves temporárias</Title>
-        <TemporaryKeyForm lock={lock} />
-      </div>
-      {lock.temporaryKeys.length === 0 ? (
-        <div className="flex flex-col items-center justify-center mt-8">
-          <span className="text-lg">Nenhuma chave temporária cadastrada</span>
+    <PageWrapper className="overflow-hidden">
+      <div className="mx-4">
+        <Navbar title="Ver fechadura" />
+        <div className="w-full bg-[#26C967] rounded-lg p-4 flex justify-center mt-8">
+          <span className="text-2xl text-white">{lock?.name}</span>
         </div>
-      ) : (
-        lock.temporaryKeys.map((key) => {
-          return (
-            <Card key={key.id} className="mt-4">
-              <CardHeader>
-                <CardTitle className="text-lg flex flex-row justify-between items-center mb-2">
-                  <span>{key.name}</span>
-                  <span className="text-sm font-medium">
-                    {keysTime.find((time) => time.id === key.id)?.time}{" "}
-                    restantes
-                  </span>
-                </CardTitle>
-                <CardDescription className="w-full flex flex-row justify-between items-center">
-                  {key.password ? (
-                    <>
-                      {passwordVisible.includes(key.id)
-                        ? key.password
-                        : Array.from({ length: key.password?.length }).map(
-                            (_) => "*"
-                          )}
-                      {passwordVisible.includes(key.id) ? (
-                        <AiOutlineEyeInvisible
-                          className="cursor-pointer"
-                          onClick={() =>
-                            setPasswordVisible((prev) =>
-                              prev.filter((id) => id !== key.id)
-                            )
-                          }
-                        />
-                      ) : (
-                        <AiOutlineEye
-                          className="cursor-pointer"
-                          onClick={() =>
-                            setPasswordVisible((prev) => [...prev, key.id])
-                          }
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <span>Sem senha</span>
-                  )}
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          );
-        })
-      )}
-    </div>
+        <div className="flex flex-row mt-8 gap-6 items-center w-full">
+          <span>{lock.description}</span>
+          <Link href={pathname + "/editar"} className="text-[#26C967]">
+            Editar
+          </Link>
+          <Button
+            className="self-end"
+            onClick={async () => {
+              const res = await axios.post(
+                `/api/esp/remote/${lock.securityCode}`
+              );
+
+              if (res)
+                toast({
+                  title: "Fechadura Aberta!",
+                  className: "mt-8",
+                });
+            }}
+          >
+            Abrir
+          </Button>
+        </div>
+        <div className="flex flex-row justify-between items-center mt-8">
+          <Title className="text-lg font-semibold">Chaves temporárias</Title>
+          <TemporaryKeyForm lock={lock} />
+        </div>
+        {lock.temporaryKeys.length === 0 ? (
+          <div className="flex flex-col items-center justify-center mt-8">
+            <span className="text-lg">Nenhuma chave temporária cadastrada</span>
+          </div>
+        ) : (
+          lock.temporaryKeys.map((key) => {
+            return (
+              <Card key={key.id} className="mt-4">
+                <CardHeader>
+                  <CardTitle className="text-lg flex flex-row justify-between items-center mb-2">
+                    <span>{key.name}</span>
+                    <span className="text-sm font-medium">
+                      {keysTime.find((time) => time.id === key.id)?.time}{" "}
+                      restantes
+                    </span>
+                  </CardTitle>
+                  <CardDescription className="w-full flex flex-row justify-between items-center">
+                    {key.password ? (
+                      <>
+                        {passwordVisible.includes(key.id)
+                          ? key.password
+                          : Array.from({ length: key.password?.length }).map(
+                              (_) => "*"
+                            )}
+                        {passwordVisible.includes(key.id) ? (
+                          <AiOutlineEyeInvisible
+                            className="cursor-pointer"
+                            onClick={() =>
+                              setPasswordVisible((prev) =>
+                                prev.filter((id) => id !== key.id)
+                              )
+                            }
+                          />
+                        ) : (
+                          <AiOutlineEye
+                            className="cursor-pointer"
+                            onClick={() =>
+                              setPasswordVisible((prev) => [...prev, key.id])
+                            }
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <span>Sem senha</span>
+                    )}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            );
+          })
+        )}
+      </div>
+    </PageWrapper>
   );
 }

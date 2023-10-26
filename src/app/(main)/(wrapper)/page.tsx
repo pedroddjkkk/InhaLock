@@ -1,3 +1,4 @@
+import { PageWrapper } from "@/app/wrapper";
 import { Home } from "@/components/client";
 import prisma from "@/lib/db";
 import { getServerSideSession } from "@/lib/session";
@@ -28,5 +29,9 @@ export default async function HomePage() {
 
   if (!user) redirect("/login");
 
-  return <Home user={user} />;
+  return (
+    <PageWrapper className="overflow-hidden">
+      <Home user={user} />
+    </PageWrapper>
+  );
 }

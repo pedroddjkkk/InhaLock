@@ -2,6 +2,8 @@
 
 import { PageWrapper } from "@/app/wrapper";
 
+export const revalidate = 0;
+
 export default function WrapperLayout({
   children,
 }: {

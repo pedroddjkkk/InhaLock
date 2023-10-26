@@ -10,6 +10,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Navbar } from "..";
+import { PageWrapper } from "@/app/wrapper";
 
 export default function Home({
   user,
@@ -25,7 +26,7 @@ export default function Home({
   }>;
 }) {
   return (
-    <div className="h-screen">
+    <PageWrapper className="overflow-hidden">
       <div className="mx-4">
         <Link href={"/fechadura/cadastrar"}>
           <div className="fixed bottom-0 -translate-x-1/2 left-1/2 w-[80%] bg-[#26C967] flex flex-row items-center justify-center p-3 rounded-lg mb-3">
@@ -54,6 +55,6 @@ export default function Home({
           </Link>
         ))}
       </div>
-    </div>
+    </PageWrapper>
   );
 }
