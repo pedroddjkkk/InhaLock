@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { sendNotificationBySecurityCode } from "@/lib/notifications";
 import { NextRequest, NextResponse } from "next/server";
 const webpush = require("web-push");
 
@@ -70,31 +71,17 @@ export async function POST(
     return NextResponse.json({
       code: 1,
     });
-  } else {
-    const sessions = await prisma.session.findMany({
-      where: {
-        user: {
-          lockers: {
-            some: {
-              securityCode: params.code,
-            },
-          },
-        },
-      },
-      include: {
-        user: true,
-      },
+  } else if (lock.notificationPassword == body) {
+    await sendNotificationBySecurityCode(params.code, {
+      title: `Alguem abriu sua fechadura ${lock.name} com a senha de notificação!`,
     });
 
-    sessions.forEach((session) => {
-      if (session.pushSubscription && session.user.sendNotification) {
-        webpush.sendNotification(
-          session.pushSubscription,
-          JSON.stringify({
-            title: "Alguem errou a senha da fechadura " + lock.name + "!",
-          })
-        );
-      }
+    return NextResponse.json({
+      code: 1,
+    });
+  } else {
+    await sendNotificationBySecurityCode(params.code, {
+      title: "Alguem errou a senha da fechadura " + lock.name + "!",
     });
 
     return NextResponse.json({
