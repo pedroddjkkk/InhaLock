@@ -40,6 +40,7 @@ export async function POST(
       password: validatedLockInput.data.password,
       description: validatedLockInput.data.description,
       securityCode: validatedLockInput.data.securityCode,
+      notificationPassword: validatedLockInput.data.notificationPassword,
     },
   });
 

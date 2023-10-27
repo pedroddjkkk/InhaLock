@@ -15,4 +15,8 @@ export const createLockSchema = z.object({
   description: z
     .string()
     .max(255, "Descrição deve ter no máximo 255 caracteres"),
+  notificationPassword: z
+    .string()
+    .max(255, "Senha de Notificação deve ter no máximo 255 caracteres")
+    .optional(),
 });

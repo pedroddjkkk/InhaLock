@@ -83,6 +83,21 @@ export default function LockerForm({
               />
               {error?.field === "securityCode" && <Text>{error.message}</Text>}
             </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="notificationPassword">Senha de Notificação</Label>
+              <Input
+                id="notificationPassword"
+                name="notificationPassword"
+                type="password"
+                error={error?.field === "notificationPassword"}
+                defaultValue={
+                  lock?.notificationPassword ? lock?.notificationPassword : ""
+                }
+              />
+              {error?.field === "notificationPassword" && (
+                <Text>{error.message}</Text>
+              )}
+            </div>
           </div>
           <div className="self-end mt-6 flex gap-4">
             <Button variant="outline" onClick={() => router.back()}>
